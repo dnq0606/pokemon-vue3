@@ -1,26 +1,58 @@
+<!-- eslint-disable no-unused-vars -->
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js App" />
+  <main-screen
+    v-if="statusMatch === 'default'"
+    v-on:onStart="onHandleBeforeSart($event)"
+  ></main-screen>
+
+  <interact-screen
+    v-if="statusMatch === 'match'"
+    :cardsContext="settings.cardsContext"
+  />
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
-
+import MainScreen from "./components/MainScreen.vue";
+import InteractScreen from "./components/InteractScreen.vue";
+// eslint-disable-next-line no-unused-vars
+import { shuffled } from "./utils/array";
 export default {
   name: "App",
   components: {
-    HelloWorld,
+    MainScreen,
+    InteractScreen,
+  },
+  data() {
+    return {
+      statusMatch: "default",
+      settings: {
+        totalOfBlocks: 0,
+        cardsContext: [],
+        starteAt: null,
+      },
+    };
+  },
+  methods: {
+    onHandleBeforeSart(config) {
+      console.log("running method onHandleBeforeSart", config);
+      this.settings.totalOfBlocks = config.totalOfBlocks;
+      const firstCards = Array.from(
+        { length: this.settings.totalOfBlocks / 2 },
+        (_, i) => i + 1
+      );
+
+      const secondCards = [...firstCards];
+
+      const cards = [...firstCards, ...secondCards];
+      this.settings.cardsContext = shuffled(
+        shuffled(shuffled(shuffled(shuffled(cards))))
+      );
+
+      this.settings.starteAt = new Date().getTime();
+      this.statusMatch = "match";
+    },
   },
 };
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
+<style scoped></style>
