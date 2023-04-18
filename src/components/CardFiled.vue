@@ -28,16 +28,23 @@ export default {
       isFiled: false,
     };
   },
-  methods: {
-    onToggleFiledCard() {
-      this.isFiled = !this.isFiled;
-    },
-  },
-
   props: {
     imgBackFaceUrl: {
       type: String,
       require: true,
+    },
+    card: {
+      type: [String, Number, Array, Object],
+    },
+  },
+  methods: {
+    onToggleFiledCard() {
+      this.isFiled = !this.isFiled;
+      if (this.isFiled) this.$emit("onFlip", this.card);
+    },
+    onFlipBackCard() {
+      console.log(1111);
+      this.isFiled = false;
     },
   },
 };
@@ -91,5 +98,9 @@ export default {
   background-repeat: no-repeat;
   height: 100%;
   width: 100%;
+}
+
+.card.disable {
+  cursor: none;
 }
 </style>
