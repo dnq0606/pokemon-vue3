@@ -13,6 +13,7 @@
 
 <script>
 import CardFiled from "./CardFiled.vue";
+// import ref from "vue";
 export default {
   components: { CardFiled },
   props: {
@@ -43,12 +44,25 @@ export default {
         this.rules[0].value !== this.rules[1].value
       ) {
         setTimeout(() => {
-          this.$refs[`card-${this.rules[0].index}`].onFlipBackCard();
-          this.$refs[`card-${this.rules[1].index}`].onFlipBackCard();
+          this.$refs[`card-${this.rules[0].index}`][0].onFlipBackCard();
+          this.$refs[`card-${this.rules[1].index}`][0].onFlipBackCard();
           this.rules = [];
         }, 800);
       } else return false;
     },
   },
+  // setup() {
+  //   let card-${this.rules[0].index} = ref(null);
+
+  //   const handleClick = () => {
+  //     myButtonRef.value.innerHTML = "Clicked!";
+  //   };
+
+  //   return {
+  //     handleClick,
+  //     myButtonRef,
+  //     myComponentRef,
+  //   };
+  // },
 };
 </script>
