@@ -8,9 +8,14 @@
   <interact-screen
     v-if="statusMatch === 'match'"
     :cardsContext="settings.cardsContext"
+    @onFinish="onFinish($event)"
   />
 
-  <result-screen v-if="statusMatch === 'result'" />
+  <result-screen
+    v-if="statusMatch === 'result'"
+    :second="timeFinish"
+    @onSartAgain="onSartAgain"
+  />
 </template>
 
 <script>
@@ -34,6 +39,7 @@ export default {
         cardsContext: [],
         starteAt: null,
       },
+      timeFinish: null,
     };
   },
   methods: {
@@ -50,6 +56,13 @@ export default {
       );
       this.settings.starteAt = new Date().getTime();
       this.statusMatch = "match";
+    },
+    onFinish(time) {
+      this.timeFinish = Math.abs(time - this.settings.starteAt) / 1000;
+      this.statusMatch = "result";
+    },
+    onSartAgain() {
+      this.statusMatch = "default";
     },
   },
 };

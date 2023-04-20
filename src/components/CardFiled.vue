@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" :class="{ disabled: isDisabled }">
     <div
       class="card__inner"
       :class="{ 'is-flipped': isFiled }"
@@ -26,6 +26,7 @@ export default {
   data() {
     return {
       isFiled: false,
+      isDisabled: false,
     };
   },
   props: {
@@ -36,21 +37,29 @@ export default {
     card: {
       type: [String, Number, Array, Object],
     },
+    rules: {
+      type: Array,
+    },
   },
   methods: {
     onToggleFiledCard() {
+      if (this.rules.length >= 2) return false;
+      if (this.isDisabled) return false;
       this.isFiled = !this.isFiled;
+      if (this.rules.length === 2) return false;
       if (this.isFiled) this.$emit("onFlip", this.card);
     },
     onFlipBackCard() {
-      console.log(1111);
       this.isFiled = false;
+    },
+    onDisable() {
+      this.isDisabled = true;
     },
   },
 };
 </script>
 
-<style lang="css" scope>
+<style lang="css" scoped>
 .card {
   display: inline-block;
   margin-right: 1rem;
@@ -100,7 +109,7 @@ export default {
   width: 100%;
 }
 
-.card.disable {
-  cursor: none;
+.card.disabled .card__inner {
+  cursor: default;
 }
 </style>
