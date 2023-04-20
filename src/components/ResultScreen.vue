@@ -26,10 +26,15 @@ export default {
 </script>
 <style lang="css" scoped>
 .result {
-  width: 100%;
-  height: 100vh;
+  width: 100vw;
+  min-height: 100vh;
+  height: auto;
   color: var(--white);
   background-color: var(--black);
+  display: grid;
+  padding: 10px;
+  justify-content: center;
+  align-content: center;
 }
 .result__title {
   display: flex;

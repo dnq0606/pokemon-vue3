@@ -1,5 +1,13 @@
 <template>
-  <div>
+  <div
+    class="interct-screen"
+    :class="{
+      column4x4: cardsContext.length / 4 == 4,
+      column6x6: cardsContext.length / 6 == 6,
+      column8x8: cardsContext.length / 8 == 8,
+      column10x10: cardsContext.length / 10 == 10,
+    }"
+  >
     <card-filed
       v-for="(card, index) in cardsContext"
       :key="index"
@@ -64,3 +72,28 @@ export default {
   },
 };
 </script>
+<style scoped>
+.interct-screen {
+  width: 100vw;
+  min-height: 100vh;
+  height: auto;
+  background-color: var(--black);
+  display: grid;
+  padding: 10px;
+  justify-content: center;
+  align-content: center;
+}
+
+.column4x4 {
+  grid-template-columns: 140px 140px 140px 140px;
+}
+.column6x6 {
+  grid-template-columns: 140px 140px 140px 140px 140px 140px;
+}
+.column8x8 {
+  grid-template-columns: 140px 140px 140px 140px 140px 140px 140px 140px;
+}
+.column10x10 {
+  grid-template-columns: 140px 140px 140px 140px 140px 140px 140px 140px 140px 140px;
+}
+</style>
